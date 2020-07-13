@@ -1,10 +1,28 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TaskList from '../components/TaskList'
 import TaskListItem from '../components/TaskListItem'
 import TaskInput from '../components/TaskInput'
+
+import IndexedDB from './api/IndexedDB'
+
 export default function Home() {
   const [tasks, setTasks] = useState([])
+  useEffect(() => {
+    let indexedDB = IndexedDB()
+    if (indexedDB) {
+      indexedDB.getAllStoreIndexedDB((data) => {
+        // console.log('data', data)
+        setTasks(data.map((item) => {
+          return {
+            id: item.id,
+            title: item.data.title,
+            status: item.data.status
+          }
+        }))
+      })
+    }
+  });
   return (
     <div className='container'>
       <Head>
