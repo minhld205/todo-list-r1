@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import TaskList from 'components/TaskList'
-import TaskListItem from 'components/TaskListItem'
-import TaskInput from 'components/TaskInput'
+import TaskList from '../components/TaskList'
+import TaskListItem from '../components/TaskListItem'
+import TaskInput from '../components/TaskInput'
 export default function Home() {
   const [tasks, setTasks] = useState([])
   return (
@@ -20,7 +20,7 @@ export default function Home() {
         <TaskList>
           {tasks.map((task) => {
             return (
-              <TaskListItem key={task.id} status={task.status}>
+              <TaskListItem key={task.id} task={task}>
                 {task.title}
               </TaskListItem>
             )
