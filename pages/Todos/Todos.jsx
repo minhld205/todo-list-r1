@@ -17,7 +17,7 @@ export const Todos = () => {
   const handleTasks = (task) => {
     const newTasks = [...tasks, task];
     handleSetTasks(newTasks);
-    updateListTodos({ todos: newTasks });
+    updateListTodos(newTasks);
   };
 
   const handleOnChange = ({ status, id }) => {
@@ -47,13 +47,17 @@ export const Todos = () => {
           };
           break;
         case STATUS.DELETED:
-          newTasks = [...newTasks.filter((task) => task[`id`] !== id)];
+          newTasks[indexTask] = {
+            ...newTask,
+            status: STATUS.DELETED,
+          };
           break;
         default:
           status = STATUS.START;
           break;
       }
       handleSetTasks(newTasks);
+      updateListTodos(newTasks);
     }
   };
 

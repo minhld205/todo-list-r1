@@ -55,9 +55,6 @@ const Actions = ({ status, onClick }) => {
     case STATUS.DONE:
       render = (
         <>
-          {/* <ButtonUI color="primary" onClick={() => onClick(status)}>
-            Start
-          </ButtonUI> */}
           <ButtonUI onClick={() => onClick(STATUS.DELETED)}>Delete</ButtonUI>
         </>
       );
@@ -72,14 +69,6 @@ const Actions = ({ status, onClick }) => {
       );
       break;
     case STATUS.DELETED:
-      render = (
-        <>
-          <ButtonUI color="primary" onClick={() => onClick(status)}>
-            Start
-          </ButtonUI>
-          <ButtonUI onClick={() => onClick(STATUS.CANCELED)}>Cancel</ButtonUI>
-        </>
-      );
       break;
     default:
       break;
@@ -93,16 +82,17 @@ export default ({ children, item, onChange }) => {
     onChange && onChange({ status, id });
   };
 
+  const classNameItemStopped =
+    (status === STATUS.DONE ||
+      status === STATUS.CANCELED ||
+      status === STATUS.DELETED) &&
+    `item-stop`;
+
   return (
     <>
       <li id={id} className="task-list__item">
         <IconTodo status={status} />
-        <p
-          className={`title ${
-            (status === STATUS.DONE || status === STATUS.CANCELED) &&
-            `item-stop`
-          }`}
-        >
+        <p className={`title ${classNameItemStopped}`}>
           {`[${STATUS_NAME[status]}] ${children}`}
         </p>
         <div className="btn-group">
